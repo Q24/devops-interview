@@ -1,23 +1,44 @@
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime,timedelta
 import pytz
+ 
+#Set IllionX office coordinates
+latitude = 28.262222
+longitude = -96.747165
+ 
+#Request to API
+url = "https://api.sunrise-sunset.org/json"
+params = {
+        "lat": latitude,
+        "lng": longitude,
+        "formatted": 0,
+        "date": "today",
+        }
+ 
+input_format   = "%Y-%m-%dT%H:%M:%S+00:00"
+output_format  = "%H:%M:%S"
 
-# IllionX Office Coordinates
-latitude = 50.930581
-longitude = 5.780691
+#API Response
+resp_json = requests.get(url, params=params).json()
+# print(resp_json)
+sunrise_date_time  = resp_json["results"]["sunrise"]
+sunset_date_time  = resp_json["results"]["sunset"]
 
-# Get the sunset and sunrise times from the API
-response = requests.get(f"https://api.sunrise-senset.org/json?lat={latitude}&lng={longitude}&formatted=0")
-data = response.json()
+sunrise = datetime.strptime(sunrise_date_time, input_format)
+sunset = datetime.strptime(sunset_date_time, input_format)
 
-cet = pytz.timezone('CET') # Setting times to CET timezone
-sunrise = sunrise.astimezone(cet)
-sunset = sunset.astimezone(cet)
+#Convert sunrise and sunset times to CET timezone
+sunrise_cet = sunrise.astimezone(pytz.timezone('CET'))
+sunset_cet = sunset.astimezone(pytz.timezone('CET'))
 
-now = datetime.now(cet) # Current time
+# Convert it to CET
+now_cet = datetime.now(pytz.timezone('CET'))
+# print("CET time:", now_cet)
 
-if sunrise < now < sunset:
-  print('OFF')
+#Check if lights must be ON or OFF
+if now_cet < sunrise_cet:
+    print(f"ON")
+elif sunrise_cet < now_cet < sunset_cet:
+    print(f"OFF")
 else:
-  print('ON')
-
+    print(f"ON")

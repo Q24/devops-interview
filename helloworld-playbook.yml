@@ -1,0 +1,25 @@
+---
+- name: Build Docker image for HelloWorld
+  hosts: localhost
+  become: true
+
+  vars_files:
+    - all-variables.yaml
+
+  tasks:
+    - name: Build Docker image
+      docker_image:
+        name: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        source: build
+        build:
+          path: ./helloworld
+          pull: yes
+          nocache: yes
+
+    - name: Run Helloworld Docker container
+      docker_container:
+        name: "{{ container_name }}"
+        image: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        state: started
+        ports:
+          - "8080:8080"

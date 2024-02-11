@@ -1,0 +1,31 @@
+---
+- name: Configure System-wide Aliases
+  hosts: localhost
+  become: true
+
+  vars_files:
+    - secrets.yml
+
+  tasks:
+    - name: Check if aliases exist in /etc/profile
+      command: grep -E '^alias (d|dc)=' /etc/profile
+      register: aliases_check
+      changed_when: false
+      ignore_errors: true
+
+    - name: Add aliases for docker and docker-compose
+      lineinfile:
+        path: /etc/profile
+        line: |
+          alias d="docker"
+          alias dc="docker-compose"
+        create: yes
+      when: aliases_check.rc != 0
+
+    - name: Create topsecret.txt file
+      copy:
+        content: "{{ secret_message }}"
+        dest: /etc/topsecret.txt
+        mode: 0600
+        owner: root
+        group: root

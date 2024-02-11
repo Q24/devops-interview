@@ -1,0 +1,4 @@
+# Global Variables
+container_name: helloworld-container
+docker_image_name: helloworld
+docker_image_tag: v1

@@ -1,0 +1,63 @@
+---
+- name: Install Docker
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+
+    - name: Install required dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+
+    - name: Create keyrings directory
+      command: sudo install -m 0755 -d /etc/apt/keyrings
+
+    - name: Add Docker GPG key
+      command: curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+
+    - name: Set permissions on docker.asc key
+      command: sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+    - name: Set up stable Docker repository
+      shell: echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    - name: Update apt package cache again
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Install Docker CLI
+      apt:
+        name: docker-ce-cli
+        state: present
+
+    - name: Install containerd.io
+      apt:
+        name: containerd.io
+        state: present
+
+    - name: Install docker-buildx-plugin
+      apt:
+        name: docker-buildx-plugin
+        state: present
+
+    - name: Install docker-compose-plugin
+      apt:
+        name: docker-compose-plugin
+        state: present
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes

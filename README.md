@@ -10,7 +10,7 @@ Create a public GitHub fork of this repository, so employees from ilionx can ass
 
 The environment uses [Vagrant](https://www.vagrantup.com/) to create a reproducible virtual machine to work on the tasks using VirtualBox. If you don't have Vagrant installed, please do so before running the commands below, following the [instructions on the Vagrant website](https://developer.hashicorp.com/vagrant/downloads?product_intent=vagrant). You will also need [VirtualBox](https://www.virtualbox.org/) to run the actual virtual machine. Follow the [installation instructions](https://www.virtualbox.org/wiki/Downloads) on the VirtualBox website to install the software.
 
-If you prefer, you can also use the package manager of your operating system to install both Vagrant and VirtualBox. Please make sure you have version 2.3.x of Vagrant, and version 7.0.x of VirtualBox for the environment to work.
+If you prefer, you can also use the package manager of your operating system to install both Vagrant and VirtualBox. Please make sure you have version 2.4.x of Vagrant, and version 7.0.x of VirtualBox for the environment to work.
 
 > Important note for arm64 Mac users: currently, VirtualBox does not work on arm64 Macs. This means you cannot use the pre-configured virtual machine to do the assessment. You can still do the assessment on your Mac, but you will need to install the software needed to do the assessment yourself. You will need [version 21 of Java Temurin](https://adoptium.net/installation/), [Docker](https://docs.docker.com/engine/install/), [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html), and a scripting language of your choice for the third assignment.
 

@@ -1,0 +1,13 @@
+---
+- name: ubuntu | Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: ubuntu | Install required packages
+  vars:
+    dependencies:
+      - jq
+      - curl
+  ansible.builtin.apt:
+    name: "{{ dependencies }}"
+    state: present

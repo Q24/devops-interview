@@ -1,0 +1,8 @@
+---
+- name: Setup ubuntu based host with dependencies for lights.sh
+  hosts: localhost
+  tasks:
+    - name: Setup ubuntu based host with dependencies for lights.sh
+      become: true
+      ansible.builtin.import_role:
+        name: lights

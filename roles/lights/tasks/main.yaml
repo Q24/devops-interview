@@ -1,0 +1,4 @@
+---
+- name: Setup ubuntu based host with dependencies for lights.sh
+  ansible.builtin.import_tasks: ubuntu.yaml
+  when: (ansible_distribution == "Ubuntu")

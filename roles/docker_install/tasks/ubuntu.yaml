@@ -1,0 +1,53 @@
+---
+# This playbook installs Docker on Ubuntu systems
+
+### based on:
+### https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+- name: ubuntu | Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: ubuntu | Install required packages
+  vars:
+    dependencies:
+      - ca-certificates
+      - curl
+  ansible.builtin.apt:
+    name: "{{ dependencies }}"
+    state: present
+
+- name: ubuntu | Create /etc/apt/keyrings directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
+- name: ubuntu | Download docker GPG key
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: "0644"
+
+- name: ubuntu | Add docker apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable"
+    filename: docker
+    state: present
+    update_cache: true
+
+- name: ubuntu | Install docker packages
+  vars:
+    dependencies:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+  ansible.builtin.apt:
+    name: "{{ dependencies }}"
+    state: present
+    update_cache: true
+
+- name: ubuntu | Ensure docker service is enabled at boot
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+    state: started

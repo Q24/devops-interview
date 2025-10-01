@@ -1,0 +1,10 @@
+---
+## Please ensure the requirements.yaml file is utilized:
+## run `ansible-galaxy collection install -r requirements.yaml` in the root of the repo.
+- name: Setup ubuntu based host with docker
+  hosts: localhost
+  tasks:
+    - name: Setup ubuntu based host with docker
+      become: true
+      ansible.builtin.import_role:
+        name: docker_install

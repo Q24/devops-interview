@@ -1,0 +1,6 @@
+---
+- name: build_container | Build Docker image
+  community.docker.docker_image_build:
+    name: helloworld
+    path: helloworld
+    dockerfile: Dockerfile

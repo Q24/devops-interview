@@ -1,0 +1,9 @@
+---
+- name: Build docker image from dockerfile
+  ansible.builtin.import_tasks: build_container.yaml
+
+- name: Run docker image
+  ansible.builtin.import_tasks: run_container.yaml
+
+- name: Run docker image
+  ansible.builtin.import_tasks: check_container.yaml

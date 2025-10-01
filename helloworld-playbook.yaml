@@ -1,0 +1,8 @@
+---
+- name: Build and run Hello World Docker container
+  hosts: localhost
+  tasks:
+    - name: Build and run Hello World Docker container
+      become: true
+      ansible.builtin.import_role:
+        name: helloworld

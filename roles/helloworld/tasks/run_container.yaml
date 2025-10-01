@@ -1,0 +1,8 @@
+---
+- name: run_container | Run Docker container from image
+  community.docker.docker_container:
+    name: helloworld_app
+    image: helloworld
+    state: started
+    ports:
+      - "8080:8080"

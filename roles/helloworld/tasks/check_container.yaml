@@ -1,0 +1,12 @@
+---
+- name: check_container | Sleep for 5 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 5
+  delegate_to: localhost
+
+- name: check_container | Check if helloworld container is running correctly
+  ansible.builtin.uri:
+    url: http://localhost:8080
+    return_content: true
+  register: helloworld_this
+  failed_when: "helloworld_this is failed or 'Hello World!' not in helloworld_this.content"

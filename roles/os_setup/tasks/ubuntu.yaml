@@ -1,0 +1,18 @@
+---
+- name: ubuntu | Create system-wide aliases for all users
+  ansible.builtin.copy:
+    dest: /etc/profile.d/aliases.sh
+    content: |
+      alias d='docker'
+      alias dc='docker compose'
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: ubuntu | Create topsecret.txt in /etc with root-only permissions
+  ansible.builtin.copy:
+    dest: /etc/topsecret.txt
+    content: "t0ps3cr3t"
+    owner: root
+    group: root
+    mode: "0400"

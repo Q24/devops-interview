@@ -1,0 +1,8 @@
+---
+- name: Setup environment with dependencies
+  hosts: localhost
+  tasks:
+    - name: OS configuration
+      become: true
+      ansible.builtin.import_role:
+        name: os_setup

@@ -1,0 +1,4 @@
+---
+- name: Setup aliases and private file
+  ansible.builtin.import_tasks: ubuntu.yaml
+  when: (ansible_distribution == "Ubuntu")
